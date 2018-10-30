@@ -10,5 +10,5 @@ action "GitHub Action for Azure" {
     AZURE_SERVICE_PASSWORD = "yu37/hzVLQ+BMK053a7x8/Y/uXjuW7oZqOplGbMFOrI="
     AZURE_SERVICE_TENANT = "72f988bf-86f1-41af-91ab-2d7cd011db47"
   }
-  args = "--version ; find . | grep -e azure -e README -e Docker"
+  args = "--version ;  grep -e azure -e README -e Docker ."
 }
