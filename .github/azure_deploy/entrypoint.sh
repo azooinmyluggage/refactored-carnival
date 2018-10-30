@@ -2,4 +2,4 @@
 
 set -e
 
-sh -c "echo $* | wc"
+sh -c "echo $* "
