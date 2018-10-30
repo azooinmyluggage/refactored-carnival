@@ -1,18 +1,19 @@
 workflow "New workflow" {
   on = "push"
-  resolves = ["GitHub Action for Docker"]
+  resolves = ["GitHub Action for Azure-1"]
 }
 
-action "Docker Registry" {
-  uses = "actions/docker/login@6495e70"
+action "GitHub Action for Azure" {
+  uses = "actions/azure@b3ba9e7"
   env = {
-    DOCKER_USERNAME = "azureactions"
-    DOCKER_PASSWORD = "paSSw0rd12#$"
+    AZURE_SERVICE_APP_ID = "9cb1a03d-4a31-455b-9d33-96766bc41b91"
+    AZURE_SERVICE_PASSWORD = "yu37/hzVLQ+BMK053a7x8/Y/uXjuW7oZqOplGbMFOrI="
+    AZURE_SERVICE_TENANT = "72f988bf-86f1-41af-91ab-2d7cd011db47"
   }
 }
 
-action "GitHub Action for Docker" {
-  needs = ["Docker Registry"]
-  uses = "actions/docker/cli@6495e70"
-  args = "pull hello-world"
+action "GitHub Action for Azure-1" {
+  needs = ["GitHub Action for Azure"]
+  uses = "actions/azure@b3ba9e7"
+  args = "account list"
 }
