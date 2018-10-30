@@ -14,5 +14,5 @@ action "Docker Registry" {
 action "GitHub Action for Docker" {
   needs = ["Docker Registry"]
   uses = "actions/docker/cli@6495e70"
-  args = "images"
+  args = "pull hello-world"
 }
