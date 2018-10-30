@@ -1,6 +1,6 @@
 workflow "New workflow" {
   on = "push"
-  resolves = ["GitHub Action for Azure-1"]
+  resolves = ["GitHub Action for Azure"]
 }
 
 action "GitHub Action for Azure" {
@@ -10,10 +10,5 @@ action "GitHub Action for Azure" {
     AZURE_SERVICE_PASSWORD = "yu37/hzVLQ+BMK053a7x8/Y/uXjuW7oZqOplGbMFOrI="
     AZURE_SERVICE_TENANT = "72f988bf-86f1-41af-91ab-2d7cd011db47"
   }
-}
-
-action "GitHub Action for Azure-1" {
-  needs = ["GitHub Action for Azure"]
-  uses = "actions/azure@b3ba9e7"
-  args = "account list"
+  args = "--version ; echo pulkit;  pwd ; echo agarwal ; ls"
 }
