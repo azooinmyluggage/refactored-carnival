@@ -5,7 +5,7 @@ workflow "New workflow" {
 
 action "./.github/azure_deploy" {
   uses = "./.github/azure_deploy"
-  args = "pulkit agarwal"
+  args = "pulkit a garwal"
   secrets = ["SAMPLE_SECRET"]
 }
 
