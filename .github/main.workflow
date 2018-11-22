@@ -1,7 +1,7 @@
 workflow "Build and Deploy to Azure" {
   resolves = [
     "Push to Container Registry",
-    "Azure/github-actions/arm@master",
+    "Azure/github-actions/web-app-container",
   ]
   on = "pull_request"
 }
@@ -53,5 +53,15 @@ action "Azure/github-actions/arm@master" {
     AZURE_RESOURCE_GROUP = "githubactionrg"
     AZURE_TEMPLATE_LOCATION = "githubactionstemplate.json"
     AZURE_TEMPLATE_PARAM_FILE = "githubparameters.json"
+  }
+}
+
+action "Azure/github-actions/web-app-container" {
+  uses = "Azure/github-actions/web-app-container@master"
+  needs = ["Azure/github-actions/arm@master"]
+  env = {
+    AZURE_APP_NAME = "githubactionswc"
+    CONTAINER_IMAGE_NAME = "githubactions"
+    DOCKER_REGISTRY_URL = "githubactions.azurecr.io"
   }
 }
