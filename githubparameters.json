@@ -3,31 +3,22 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
-            "value": "githubactionswc"
+            "value": "ga-webapp"
         },
         "dockerRegistryUrl": {
             "value": "https://index.docker.io"
         },
         "hostingPlanName": {
-            "value": "githubactions"
+            "value": "b2core"
         },
         "hostingEnvironment": {
-            "value": "ronaiase"
+            "value": ""
         },
         "location": {
-            "value": "West US"
-        },
-        "sku": {
-            "value": "Isolated"
-        },
-        "skuCode": {
-            "value": "I1"
-        },
-        "workerSize": {
-            "value": "0"
+            "value": "West Europe"
         },
         "serverFarmResourceGroup": {
-            "value": "githubactionrg"
+            "value": "ronai-dnd"
         },
         "subscriptionId": {
             "value": "afc11291-9826-46be-b852-70349146ddf8"
