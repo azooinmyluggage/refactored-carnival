@@ -1,7 +1,7 @@
 workflow "Build and Deploy to Azure" {
   resolves = [
-    "Azure/github-actions/arm@master",
     "Push to Container Registry",
+    "Azure/github-actions/arm@master",
   ]
   on = "pull_request"
 }
@@ -35,9 +35,20 @@ action "Push to Container Registry" {
   needs = ["Tag image"]
 }
 
+action "Azure/github-actions/azure-login@master" {
+  uses = "Azure/github-actions/azure-login@master"
+  needs = ["Push to Container Registry"]
+  env = {
+    AZURE_SUBSCRIPTION = "RMPM"
+    AZURE_SERVICE_APP_ID = "0a60f5e2-ed4a-4cfd-bfe2-1b45e6d97c9e"
+    AZURE_SERVICE_TENANT = "72f988bf-86f1-41af-91ab-2d7cd011db47"
+  }
+  secrets = ["AZURE_SERVICE_PASSWORD"]
+}
+
 action "Azure/github-actions/arm@master" {
   uses = "Azure/github-actions/arm@master"
-  needs = ["Push to Container Registry"]
+  needs = ["Azure/github-actions/azure-login@master"]
   env = {
     AZURE_RESOURCE_GROUP = "githubactionrg"
     AZURE_TEMPLATE_LOCATION = "githubactionstemplate.json"
