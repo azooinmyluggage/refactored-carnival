@@ -3,7 +3,7 @@ workflow "Build and Deploy to Azure" {
     "Push to Container Registry",
     "Deploy to Azure WebappContainer",
   ]
-  on = "pull_request"
+  on = "push"
 }
 
 action "Login - Container Registry" {
