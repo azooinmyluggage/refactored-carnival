@@ -35,7 +35,7 @@ action "Push to Container Registry" {
   needs = ["Tag image"]
 }
 
-action "Azure/github-actions/azure-login@master" {
+action "Azure Login" {
   uses = "Azure/github-actions/azure-login@master"
   needs = ["Push to Container Registry"]
   env = {
@@ -48,12 +48,12 @@ action "Azure/github-actions/azure-login@master" {
 
 action "Create Webapp for Containers" {
   uses = "Azure/github-actions/arm@master"
-  needs = ["Azure/github-actions/azure-login@master"]
   env = {
     AZURE_RESOURCE_GROUP = "githubactionrg"
     AZURE_TEMPLATE_LOCATION = "githubactionstemplate.json"
     AZURE_TEMPLATE_PARAM_FILE = "githubparameters.json"
   }
+  needs = ["Azure Login"]
 }
 
 action "Deploy to Azure WebappContainer" {
