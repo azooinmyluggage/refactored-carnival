@@ -32,17 +32,4 @@ action "Push to Container Registry" {
   needs = ["Tag image"]
 }
 
-action "Deploy to AKS" {
-  uses = "Azure/github-actions/aks-deploy@master"
-  env = {
-    HELM_RELEASE_NAME = "githubservice"
-    CONTAINER_IMAGE_NAME = "githubactions:latest"
-    DOCKER_REGISTRY_URL = "githubactions.azurecr.io"
-    DOCKER_USERNAME = "githubactions"
-  }
-  needs = ["Push to Container Registry"]
-  secrets = [
-    "DOCKER_PASSWORD",
-    "KUBECONFIG_CONTENTS",
-  ]
-}
+
