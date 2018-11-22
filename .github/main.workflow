@@ -22,7 +22,7 @@ action "Build container image" {
 
 action "Tag image" {
   uses = "actions/docker/tag@6495e70"
-  args = "githubactions:latest githubactions.azurecr.io/githubactions:latest"
+  args = "githubactions githubactions.azurecr.io/githubactions"
   needs = ["Build container image"]
 }
 
