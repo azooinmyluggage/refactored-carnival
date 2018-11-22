@@ -1,7 +1,13 @@
-FROM nginx:latest
+#FROM nginx:latest
 
-RUN ls -alh
+#RUN ls -alh
 
-ENV PORT 80
+#ENV PORT 80
 
-EXPOSE 80
+#EXPOSE 80
+
+
+
+FROM scratch
+COPY hello /
+CMD ["/hello"]
