@@ -22,7 +22,7 @@ action "Build container image" {
 
 action "Tag image" {
   uses = "actions/docker/tag@6495e70"
-  args = "githubactions:latest githubactions.azurecr.io/githubactions:latest"
+  args = "githubactions githubactions.azurecr.io/githubactions"
   needs = ["Build container image"]
 }
 
@@ -31,8 +31,6 @@ action "Push to Container Registry" {
   args = "push githubactions.azurecr.io/githubactions:latest"
   needs = ["Tag image"]
 }
-
-
 
 action "Deploy to AKS" {
   uses = "Azure/github-actions/aks-deploy@master"
