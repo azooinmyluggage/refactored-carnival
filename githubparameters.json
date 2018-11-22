@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "value": "githubactionswc"
+        },
+        "dockerRegistryUrl": {
+            "value": "https://index.docker.io"
+        },
+        "hostingPlanName": {
+            "value": "githubactions"
+        },
+        "hostingEnvironment": {
+            "value": "ronaiase"
+        },
+        "location": {
+            "value": "West US"
+        },
+        "sku": {
+            "value": "Isolated"
+        },
+        "skuCode": {
+            "value": "I1"
+        },
+        "workerSize": {
+            "value": "0"
+        },
+        "serverFarmResourceGroup": {
+            "value": "githubactionrg"
+        },
+        "subscriptionId": {
+            "value": "afc11291-9826-46be-b852-70349146ddf8"
+        }
+    }
+}
