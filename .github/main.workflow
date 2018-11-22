@@ -1,6 +1,6 @@
 workflow "Build and Deploy to Azure AKS" {
   resolves = ["Deploy to AKS"]
-  on = "commit_comment"
+  on = "pull_request"
 }
 
 action "Login - Container Registry" {
@@ -31,8 +31,6 @@ action "Push to Container Registry" {
   args = "push githubactions.azurecr.io/githubactions:latest"
   needs = ["Tag image"]
 }
-
-
 
 action "Deploy to AKS" {
   uses = "Azure/github-actions/aks-deploy@master"
