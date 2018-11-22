@@ -1,5 +1,8 @@
 workflow "Build and Deploy to Azure AKS" {
-  resolves = ["Deploy to AKS"]
+  resolves = [
+    "Deploy to AKS",
+    "Azure/github-actions/arm@master",
+  ]
   on = "pull_request"
 }
 
@@ -45,4 +48,14 @@ action "Deploy to AKS" {
     "DOCKER_PASSWORD",
     "KUBECONFIG_CONTENTS",
   ]
+}
+
+action "Azure/github-actions/arm@master" {
+  uses = "Azure/github-actions/arm@master"
+  needs = ["Push to Container Registry"]
+  env = {
+    AZURE_RESOURCE_GROUP = "githubactionrg"
+    AZURE_TEMPLATE_LOCATION = "githubactionstemplate.json"
+    AZURE_TEMPLATE_PARAM_FILE = "githubparameters.json"
+  }
 }
