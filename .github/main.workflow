@@ -6,7 +6,7 @@ workflow "Azure Actions " {
   on = "push"
 }
 
-action "Login - Container Registry" {
+action "Login Registry" {
   uses = "actions/docker/login@6495e70"
   env = {
     DOCKER_REGISTRY_URL = "githubactions.azurecr.io"
@@ -18,9 +18,7 @@ action "Login - Container Registry" {
 action "Build container image" {
   uses = "actions/docker/cli@6495e70"
   args = "build -t githubactions ."
-  needs = [
-    "Login - Container Registry",
-  ]
+  needs = ["Login Registry"]
 }
 
 action "Tag image" {
@@ -46,7 +44,7 @@ action "Azure Login" {
   secrets = ["AZURE_SERVICE_PASSWORD"]
 }
 
-action "Create Webapp for Containers" {
+action "Create WebappContainers" {
   uses = "Azure/github-actions/arm@master"
   env = {
     AZURE_RESOURCE_GROUP = "githubactionrg"
@@ -63,5 +61,5 @@ action "Deploy to Azure WebappContainer" {
     DOCKER_REGISTRY_URL = "githubactions.azurecr.io"
     AZURE_APP_NAME = "ga-webapp"
   }
-  needs = ["Create Webapp for Containers"]
+  needs = ["Create WebappContainers"]
 }
