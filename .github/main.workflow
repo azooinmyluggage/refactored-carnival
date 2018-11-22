@@ -1,7 +1,7 @@
 workflow "Build and Deploy to Azure" {
   resolves = [
     "Push to Container Registry",
-    "Azure/github-actions/web-app-container",
+    "Deploy to Azure WebappContainer",
   ]
   on = "pull_request"
 }
@@ -46,7 +46,7 @@ action "Azure/github-actions/azure-login@master" {
   secrets = ["AZURE_SERVICE_PASSWORD"]
 }
 
-action "Azure/github-actions/arm@master" {
+action "Create Webapp for Containers" {
   uses = "Azure/github-actions/arm@master"
   needs = ["Azure/github-actions/azure-login@master"]
   env = {
@@ -56,12 +56,12 @@ action "Azure/github-actions/arm@master" {
   }
 }
 
-action "Azure/github-actions/web-app-container" {
+action "Deploy to Azure WebappContainer" {
   uses = "Azure/github-actions/web-app-container@master"
-  needs = ["Azure/github-actions/arm@master"]
   env = {
     AZURE_APP_NAME = "githubactionswc"
     CONTAINER_IMAGE_NAME = "githubactions"
     DOCKER_REGISTRY_URL = "githubactions.azurecr.io"
   }
+  needs = ["Create Webapp for Containers"]
 }
