@@ -1,6 +1,6 @@
 workflow "Build and Deploy to Azure AKS" {
-  on = "pull_request"
   resolves = ["Deploy to AKS"]
+  on = "commit_comment"
 }
 
 action "Login - Container Registry" {
