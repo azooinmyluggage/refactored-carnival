@@ -1,4 +1,4 @@
-workflow "Build and Deploy to Azure AKS" {
+workflow "Build and Deploy to Azure" {
   resolves = [
     "Azure/github-actions/arm@master",
     "Push to Container Registry",
