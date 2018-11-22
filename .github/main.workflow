@@ -59,9 +59,9 @@ action "Create Webapp for Containers" {
 action "Deploy to Azure WebappContainer" {
   uses = "Azure/github-actions/web-app-container@master"
   env = {
-    AZURE_APP_NAME = "githubactionswc"
     CONTAINER_IMAGE_NAME = "githubactions"
     DOCKER_REGISTRY_URL = "githubactions.azurecr.io"
+    AZURE_APP_NAME = "ga-webapp"
   }
   needs = ["Create Webapp for Containers"]
 }
