@@ -1,7 +1,7 @@
 workflow "Build and Deploy to Azure AKS" {
   resolves = [
-    "Deploy to AKS",
     "Azure/github-actions/arm@master",
+    "Push to Container Registry",
   ]
   on = "pull_request"
 }
@@ -33,21 +33,6 @@ action "Push to Container Registry" {
   uses = "actions/docker/cli@6495e70"
   args = "push githubactions.azurecr.io/githubactions:latest"
   needs = ["Tag image"]
-}
-
-action "Deploy to AKS" {
-  uses = "Azure/github-actions/aks-deploy@master"
-  env = {
-    HELM_RELEASE_NAME = "githubservice"
-    CONTAINER_IMAGE_NAME = "githubactions:latest"
-    DOCKER_REGISTRY_URL = "githubactions.azurecr.io"
-    DOCKER_USERNAME = "githubactions"
-  }
-  needs = ["Push to Container Registry"]
-  secrets = [
-    "DOCKER_PASSWORD",
-    "KUBECONFIG_CONTENTS",
-  ]
 }
 
 action "Azure/github-actions/arm@master" {
