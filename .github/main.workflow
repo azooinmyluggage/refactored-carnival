@@ -1,4 +1,4 @@
-workflow "Build and Deploy to Azure" {
+workflow "Azure Actions " {
   resolves = [
     "Push to Container Registry",
     "Deploy to Azure WebappContainer",
