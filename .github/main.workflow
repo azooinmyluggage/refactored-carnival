@@ -74,5 +74,6 @@ action "Azure/github-actions/aks-deploy@master" {
     CONTAINER_IMAGE_NAME = "githubactions:latest"
     DOCKER_REGISTRY_URL = "githubactionsacr.azurecr.io"
     DOCKER_USERNAME = "githubactionsacr"
+    AKS_CLUSTER_NAME = "githubactions"
   }
 }
