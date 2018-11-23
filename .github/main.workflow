@@ -1,8 +1,8 @@
 workflow "Azure Actions " {
   resolves = [
     "Deploy to Azure WebappContainer",
-    "Push to Container Registry",
     "Azure/github-actions/aks-deploy@master",
+    "Azure/github-actions/aks-deploy@master-1",
   ]
   on = "push"
 }
@@ -70,6 +70,19 @@ action "Azure/github-actions/aks-deploy@master" {
   uses = "Azure/github-actions/aks-deploy@master"
   needs = ["Azure Login"]
   secrets = ["DOCKER_PASSWORD"]
+  env = {
+    HELM_RELEASE_NAME = "githubservice"
+    CONTAINER_IMAGE_NAME = "githubactions:latest"
+    DOCKER_REGISTRY_URL = "githubactionsacr.azurecr.io"
+    DOCKER_USERNAME = "githubactionsacr"
+    AKS_CLUSTER_NAME = "githubactions"
+  }
+}
+
+action "Azure/github-actions/aks-deploy@master-1" {
+  uses = "Azure/github-actions/aks-deploy@master"
+  needs = ["Push to Container Registry"]
+  secrets = ["DOCKER_PASSWORD", "KUBE_CONFIG_DATA"]
   env = {
     HELM_RELEASE_NAME = "githubservice"
     CONTAINER_IMAGE_NAME = "githubactions:latest"
