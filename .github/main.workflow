@@ -17,19 +17,19 @@ action "Login Registry" {
 
 action "Build container image" {
   uses = "actions/docker/cli@6495e70"
-  args = "build -t githubactions ."
+  args = "build -t githubactionsacr.azurecr.io/githubactions ."
   needs = ["Login Registry"]
 }
 
 action "Tag image" {
   uses = "actions/docker/tag@6495e70"
-  args = "githubactions:latest githubactionsacr.azurecr.io/githubactions"
+  args = "githubactionsacr.azurecr.io/githubactions githubactionsacr.azurecr.io/githubactions"
   needs = ["Build container image"]
 }
 
 action "Push to Container Registry" {
   uses = "actions/docker/cli@6495e70"
-  args = "push githubactionsacr.azurecr.io/githubactions:latest"
+  args = "push githubactionsacr.azurecr.io/githubactions"
   needs = ["Tag image"]
 }
 
