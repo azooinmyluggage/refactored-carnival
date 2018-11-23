@@ -69,11 +69,8 @@ action "Deploy to Azure WebappContainer" {
 action "Azure/github-actions/aks-deploy@master" {
   uses = "Azure/github-actions/aks-deploy@master"
   needs = ["Azure Login"]
-  secrets = ["DOCKER_PASSWORD"]
   env = {
     CONTAINER_IMAGE_NAME = "githubactions:latest"
-    DOCKER_REGISTRY_URL = "githubactionsacr.azurecr.io"
-    DOCKER_USERNAME = "githubactionsacr"
     AKS_CLUSTER_NAME = "githubactions"
     HELM_RELEASE_NAME = "githubservice-azlogin"
   }
@@ -88,6 +85,5 @@ action "Azure/github-actions/aks-deploy@master-1" {
     CONTAINER_IMAGE_NAME = "githubactions:latest"
     DOCKER_REGISTRY_URL = "githubactionsacr.azurecr.io"
     DOCKER_USERNAME = "githubactionsacr"
-    AKS_CLUSTER_NAME = "githubactions"
   }
 }
