@@ -1,7 +1,7 @@
 workflow "Azure Actions " {
   resolves = [
-    "Push to Container Registry",
     "Deploy to Azure WebappContainer",
+    "Deploy to AKS",
   ]
   on = "push"
 }
@@ -62,4 +62,16 @@ action "Deploy to Azure WebappContainer" {
     AZURE_APP_NAME = "ga-webapp"
   }
   needs = ["Create WebappContainers"]
+}
+
+action "Deploy to AKS" {
+  uses = "Azure/github-actions/aks-deploy@master"
+  needs = ["Push to Container Registry"]
+  secrets = ["KUBECONFIG_CONTENTS", "DOCKER_PASSWORD"]
+  env = {
+    HELM_RELEASE_NAME = "githubservice"
+    CONTAINER_IMAGE_NAME = "githubactions:latest"
+    DOCKER_REGISTRY_URL = "githubactions.azurecr.io"
+    DOCKER_USERNAME = "githubactions"
+  }
 }
