@@ -70,8 +70,8 @@ action "Deploy to AKS" {
   secrets = ["KUBECONFIG_CONTENTS", "DOCKER_PASSWORD"]
   env = {
     HELM_RELEASE_NAME = "githubservice"
-    CONTAINER_IMAGE_NAME = "githubactions:latest"
     DOCKER_REGISTRY_URL = "githubactions.azurecr.io"
     DOCKER_USERNAME = "githubactions"
+    CONTAINER_IMAGE_NAME = "githubactions"
   }
 }
