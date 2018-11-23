@@ -3,6 +3,7 @@ workflow "Azure Actions " {
     "Deploy to Azure WebappContainer",
     "Azure/github-actions/aks-deploy@master",
     "Azure/github-actions/aks-deploy@master-1",
+    "Deploy to Functionapp Container",
   ]
   on = "push"
 }
@@ -61,6 +62,7 @@ action "Deploy to Azure WebappContainer" {
     CONTAINER_IMAGE_NAME = "githubactions"
     AZURE_APP_NAME = "ga-webapp"
     DOCKER_REGISTRY_URL = "githubactionsacr.azurecr.io"
+    DOCKER_USERNAME = "githubactionsacr"
   }
   needs = ["Create WebappContainers"]
   secrets = ["DOCKER_PASSWORD"]
@@ -85,5 +87,27 @@ action "Azure/github-actions/aks-deploy@master-1" {
     CONTAINER_IMAGE_NAME = "githubactions:latest"
     DOCKER_REGISTRY_URL = "githubactionsacr.azurecr.io"
     DOCKER_USERNAME = "githubactionsacr"
+  }
+}
+
+action "Create functionapp" {
+  uses = "Azure/github-actions/arm@master"
+  needs = ["Azure Login"]
+  env = {
+    AZURE_RESOURCE_GROUP = "githubactionrg"
+    AZURE_TEMPLATE_LOCATION = "functiontemplate.json"
+    AZURE_TEMPLATE_PARAM_FILE = "functionparameters.json"
+  }
+}
+
+action "Deploy to Functionapp Container" {
+  uses = "Azure/github-actions/function-app-container@master"
+  needs = ["Create functionapp"]
+  secrets = ["DOCKER_PASSWORD"]
+  env = {
+    AZURE_APP_NAME = "ga-functionapp"
+    DOCKER_USERNAME = "githubactionsacr"
+    DOCKER_REGISTRY_URL = "githubactionsacr.azurecr.io"
+    CONTAINER_IMAGE_NAME = "githubactions"
   }
 }
