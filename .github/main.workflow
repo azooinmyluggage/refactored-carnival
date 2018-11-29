@@ -64,5 +64,4 @@ action "Deploy to Azure WebappContainer" {
     DOCKER_USERNAME = "githubactionsacr"
   }
   needs = ["Create WebappContainers"]
-  secrets = ["DOCKER_PASSWORD"]
 }
