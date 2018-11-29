@@ -39,8 +39,8 @@ action "Azure Login" {
   needs = ["Push to Container Registry"]
   env = {
     AZURE_SUBSCRIPTION = "RMPM"
-    AZURE_SERVICE_APP_ID = "0a60f5e2-ed4a-4cfd-bfe2-1b45e6d97c9e"
     AZURE_SERVICE_TENANT = "72f988bf-86f1-41af-91ab-2d7cd011db47"
+    AZURE_SERVICE_APP_ID = "0c508c6b-533a-47a8-a7df-ec8d6481792a"
   }
   secrets = ["AZURE_SERVICE_PASSWORD"]
 }
