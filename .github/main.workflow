@@ -1,4 +1,4 @@
-workflow "Azure Actions " {
+workflow "GH Actions for Azure" {
   resolves = [
     "Deploy to Azure WebappContainer",
     "Push to Container Registry",
