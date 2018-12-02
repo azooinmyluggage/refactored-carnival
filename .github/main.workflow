@@ -46,7 +46,7 @@ action "Azure Login" {
 }
 
 action "Create WebappContainers" {
-  uses = "Azure/github-actions/arm@master"
+  uses = "Azure/github-actions/arm@1922d68686a21f7f96e6911bd0daec0eaad0c06d"
   env = {
     AZURE_RESOURCE_GROUP = "githubactionrg"
     AZURE_TEMPLATE_LOCATION = "githubactionstemplate.json"
