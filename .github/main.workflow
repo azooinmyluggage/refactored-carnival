@@ -40,7 +40,7 @@ action "Azure Login" {
   env = {
     AZURE_SUBSCRIPTION = "RMPM"
     AZURE_SERVICE_TENANT = "72f988bf-86f1-41af-91ab-2d7cd011db47"
-    AZURE_SERVICE_APP_ID = "4d3aa768-1b4f-45ce-adea-5f80b74e0021"
+    AZURE_SERVICE_APP_ID = "2a0080c5-78f9-4629-9d9b-d065ee4d740e"
   }
   secrets = ["AZURE_SERVICE_PASSWORD"]
 }
