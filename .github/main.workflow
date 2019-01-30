@@ -35,7 +35,7 @@ action "Push to Container Registry" {
 }
 
 action "Azure Login" {
-  uses = "Azure/github-actions/azure-login@master"
+  uses = "Azure/github-actions/login@master"
   needs = ["Push to Container Registry"]
   env = {
     AZURE_SUBSCRIPTION = "RMPM"
