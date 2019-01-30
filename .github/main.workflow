@@ -73,5 +73,7 @@ action "Azure/github-actions/aks@master" {
     AKS_CLUSTER_NAME = "actionsplkt"
     DOCKER_REGISTRY_URL = "githubactionsacr.azurecr.io"
     CONTAINER_IMAGE_NAME = "githubactions"
+    DOCKER_USERNAME = "githubactionsacr"
   }
+  secrets = ["DOCKER_PASSWORD"]
 }
