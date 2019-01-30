@@ -56,7 +56,7 @@ action "Create WebappContainers" {
 }
 
 action "Deploy to Azure WebappContainer" {
-  uses = "Azure/github-actions/web-app-container@master"
+  uses = "Azure/github-actions/containerwebapp@master"
   env = {
     CONTAINER_IMAGE_NAME = "githubactions"
     AZURE_APP_NAME = "ga-webapp"
