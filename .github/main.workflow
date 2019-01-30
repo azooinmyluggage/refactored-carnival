@@ -2,7 +2,7 @@ workflow "GH Actions for Azure" {
   resolves = [
     "Deploy to Azure WebappContainer",
     "Push to Container Registry",
-    "Azure Login",
+    "Azure/github-actions/aks@master",
   ]
   on = "push"
 }
@@ -64,4 +64,14 @@ action "Deploy to Azure WebappContainer" {
     DOCKER_USERNAME = "githubactionsacr"
   }
   needs = ["Create WebappContainers"]
+}
+
+action "Azure/github-actions/aks@master" {
+  uses = "Azure/github-actions/aks@master"
+  needs = ["Azure Login"]
+  env = {
+    AKS_CLUSTER_NAME = "actionsplkt"
+    DOCKER_REGISTRY_URL = "githubactionsacr.azurecr.io"
+    CONTAINER_IMAGE_NAME = "githubactions"
+  }
 }
