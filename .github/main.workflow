@@ -10,27 +10,27 @@ workflow "GH Actions for Azure" {
 action "Login Registry" {
   uses = "actions/docker/login@6495e70"
   env = {
-    DOCKER_REGISTRY_URL = "githubactionsacr.azurecr.io"
-    DOCKER_USERNAME = "githubactionsacr"
+    DOCKER_USERNAME = "aksactionacr"
+    DOCKER_REGISTRY_URL = "aksactionacr.azurecr.io"
   }
   secrets = ["DOCKER_PASSWORD"]
 }
 
 action "Build container image" {
   uses = "actions/docker/cli@6495e70"
-  args = "build -t githubactionsacr.azurecr.io/githubactions ."
+  args = "build -t aksactionacr.azurecr.io/aksactionacr ."
   needs = ["Login Registry"]
 }
 
 action "Tag image" {
   uses = "actions/docker/tag@6495e70"
-  args = "githubactionsacr.azurecr.io/githubactions githubactionsacr.azurecr.io/githubactions"
+  args = "aksactionacr.azurecr.io/aksaction aksactionacr.azurecr.io/aksaction"
   needs = ["Build container image"]
 }
 
 action "Push to Container Registry" {
   uses = "actions/docker/cli@6495e70"
-  args = "push githubactionsacr.azurecr.io/githubactions"
+  args = "push aksactionacr.azurecr.io/aksaction"
   needs = ["Tag image"]
 }
 
@@ -40,7 +40,7 @@ action "Azure Login" {
   env = {
     AZURE_SUBSCRIPTION = "RMPM"
     AZURE_SERVICE_TENANT = "72f988bf-86f1-41af-91ab-2d7cd011db47"
-    AZURE_SERVICE_APP_ID = "2a0080c5-78f9-4629-9d9b-d065ee4d740e"
+    AZURE_SERVICE_APP_ID = "1d05d3c7-d015-4c23-a3b6-59813ca41b6d"
   }
   secrets = ["AZURE_SERVICE_PASSWORD"]
 }
@@ -58,10 +58,10 @@ action "Create WebappContainers" {
 action "Deploy to Azure WebappContainer" {
   uses = "Azure/github-actions/containerwebapp@master"
   env = {
-    CONTAINER_IMAGE_NAME = "githubactions"
     AZURE_APP_NAME = "ga-webapp"
-    DOCKER_REGISTRY_URL = "githubactionsacr.azurecr.io"
-    DOCKER_USERNAME = "githubactionsacr"
+    CONTAINER_IMAGE_NAME = "aksaction"
+    DOCKER_REGISTRY_URL = "aksactionacr.azurecr.io"
+    DOCKER_USERNAME = "aksactionacr"
   }
   needs = ["Create WebappContainers"]
 }
@@ -70,10 +70,9 @@ action "Azure/github-actions/aks@master" {
   uses = "Azure/github-actions/aks@master"
   needs = ["Azure Login"]
   env = {
-    AKS_CLUSTER_NAME = "actionsplkt"
-    DOCKER_REGISTRY_URL = "githubactionsacr.azurecr.io"
-    CONTAINER_IMAGE_NAME = "githubactions"
-    DOCKER_USERNAME = "githubactionsacr"
+    DOCKER_REGISTRY_URL = "aksactionacr.azurecr.io"
+    AKS_CLUSTER_NAME = "aksactioncluster"
+    CONTAINER_IMAGE_NAME = "aksaction"
+    DOCKER_USERNAME = "aksactionacr"
   }
-  secrets = ["DOCKER_PASSWORD"]
 }
