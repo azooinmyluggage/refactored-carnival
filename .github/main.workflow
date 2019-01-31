@@ -10,27 +10,27 @@ workflow "GH Actions for Azure" {
 action "Login Registry" {
   uses = "actions/docker/login@6495e70"
   env = {
-    DOCKER_USERNAME = "aksactionacr"
-    DOCKER_REGISTRY_URL = "aksactionacr.azurecr.io"
+    DOCKER_USERNAME = "aksdemoactionacr"
+    DOCKER_REGISTRY_URL = "aksdemoactionacr.azurecr.io"
   }
   secrets = ["DOCKER_PASSWORD"]
 }
 
 action "Build container image" {
   uses = "actions/docker/cli@6495e70"
-  args = "build -t aksactionacr.azurecr.io/aksaction ."
+  args = "build -t aksdemoactionacr.azurecr.io/aksdemoactionacr ."
   needs = ["Login Registry"]
 }
 
 action "Tag image" {
   uses = "actions/docker/tag@6495e70"
-  args = "aksactionacr.azurecr.io/aksaction aksactionacr.azurecr.io/aksaction"
+  args = "aksdemoactionacr.azurecr.io/aksdemoactionacr aksdemoactionacr.azurecr.io/aksdemoactionacr"
   needs = ["Build container image"]
 }
 
 action "Push to Container Registry" {
   uses = "actions/docker/cli@6495e70"
-  args = "push aksactionacr.azurecr.io/aksaction"
+  args = "push aksdemoactionacr.azurecr.io/aksdemoactionacr"
   needs = ["Tag image"]
 }
 
@@ -59,21 +59,22 @@ action "Deploy to Azure WebappContainer" {
   uses = "Azure/github-actions/containerwebapp@master"
   env = {
     AZURE_APP_NAME = "ga-webapp"
-    CONTAINER_IMAGE_NAME = "aksaction"
-    DOCKER_REGISTRY_URL = "aksactionacr.azurecr.io"
-    DOCKER_USERNAME = "aksactionacr"
+    DOCKER_REGISTRY_URL = "aksdemoactionacr.azurecr.io"
+    CONTAINER_IMAGE_NAME = "aksdemoactionacr"
+    DOCKER_USERNAME = "aksdemoactionacr"
   }
   needs = ["Create WebappContainers"]
+  secrets = ["DOCKER_PASSWORD"]
 }
 
 action "Azure/github-actions/aks@master" {
   uses = "Azure/github-actions/aks@master"
   needs = ["Azure Login"]
   env = {
-    DOCKER_REGISTRY_URL = "aksactionacr.azurecr.io"
-    AKS_CLUSTER_NAME = "aksactioncluster"
-    DOCKER_USERNAME = "aksactionacr"
-    CONTAINER_IMAGE_NAME = "aksactionacr.azurecr.io/aksaction"
+    DOCKER_USERNAME = "aksdemoactionacr"
+    AKS_CLUSTER_NAME = "aksdemoaction"
+    CONTAINER_IMAGE_NAME = "aksdemoactionacr.azurecr.io/aksdemoactionacr"
+    DOCKER_REGISTRY_URL = "aksdemoactionacr.azurecr.io"
   }
   secrets = ["DOCKER_PASSWORD"]
 }
