@@ -75,4 +75,5 @@ action "Azure/github-actions/aks@master" {
     CONTAINER_IMAGE_NAME = "aksaction"
     DOCKER_USERNAME = "aksactionacr"
   }
+  secrets = ["DOCKER_PASSWORD"]
 }
