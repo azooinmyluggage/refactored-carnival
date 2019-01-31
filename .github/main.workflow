@@ -18,7 +18,7 @@ action "Login Registry" {
 
 action "Build container image" {
   uses = "actions/docker/cli@6495e70"
-  args = "build -t aksactionacr.azurecr.io/aksactionacr ."
+  args = "build -t aksactionacr.azurecr.io/aksaction ."
   needs = ["Login Registry"]
 }
 
