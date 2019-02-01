@@ -3,6 +3,7 @@ workflow "GH Actions for Azure" {
     "Deploy to Azure WebappContainer",
     "Push to Container Registry",
     "Azure Login",
+    "Azure AKS Deploy",
   ]
   on = "push"
 }
