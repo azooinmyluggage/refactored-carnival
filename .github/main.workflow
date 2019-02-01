@@ -16,19 +16,19 @@ action "Login Registry" {
 
 action "Build container image" {
   uses = "actions/docker/cli@6495e70"
-  args = "build -t aksdemoactionacr.azurecr.io/aksdemoactionacr ."
+  args = "build -t aksdemoactionacr.azurecr.io/aksdemoactionacr1 ."
   needs = ["Login Registry"]
 }
 
 action "Tag image" {
   uses = "actions/docker/tag@6495e70"
-  args = "aksdemoactionacr.azurecr.io/aksdemoactionacr aksdemoactionacr.azurecr.io/aksdemoactionacr"
+  args = "aksdemoactionacr.azurecr.io/aksdemoactionacr1:latest aksdemoactionacr.azurecr.io/aksdemoactionacr1"
   needs = ["Build container image"]
 }
 
 action "Push to Container Registry" {
   uses = "actions/docker/cli@6495e70"
-  args = "push aksdemoactionacr.azurecr.io/aksdemoactionacr"
+  args = "push aksdemoactionacr.azurecr.io/aksdemoactionacr1"
   needs = ["Tag image"]
 }
 
@@ -50,7 +50,7 @@ action "Azure AKS Deploy" {
   env = {
     DOCKER_REGISTRY_URL = "aksdemoactionacr.azurecr.io"
     DOCKER_USERNAME = "aksdemoactionacr"
-    CONTAINER_IMAGE_NAME = "aksdemoactionacr.azurecr.io/aksdemoactionacr"
+    CONTAINER_IMAGE_NAME = "aksdemoactionacr.azurecr.io/aksdemoactionacr1"
     AKS_CLUSTER_NAME = "desattirtest"
   }
 }
