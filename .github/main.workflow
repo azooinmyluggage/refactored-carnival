@@ -5,8 +5,36 @@ workflow "GH Actions for Azure" {
   on = "push"
 }
 
+action "Login Registry" {
+  uses = "actions/docker/login@6495e70"
+  env = {
+    DOCKER_USERNAME = "aksdemoactionacr"
+    DOCKER_REGISTRY_URL = "aksdemoactionacr.azurecr.io"
+  }
+  secrets = ["DOCKER_PASSWORD"]
+}
+
+action "Build container image" {
+  uses = "actions/docker/cli@6495e70"
+  args = "build -t aksdemoactionacr.azurecr.io/aksdemoactionacr ."
+  needs = ["Login Registry"]
+}
+
+action "Tag image" {
+  uses = "actions/docker/tag@6495e70"
+  args = "aksdemoactionacr.azurecr.io/aksdemoactionacr aksdemoactionacr.azurecr.io/aksdemoactionacr"
+  needs = ["Build container image"]
+}
+
+action "Push to Container Registry" {
+  uses = "actions/docker/cli@6495e70"
+  args = "push aksdemoactionacr.azurecr.io/aksdemoactionacr"
+  needs = ["Tag image"]
+}
+
 action "Azure Login - 2" {
   uses = "Azure/github-actions/login@master"
+  needs = ["Push to Container Registry"]
   env = {
     AZURE_SUBSCRIPTION = "RMDev"
     AZURE_SERVICE_TENANT = "72f988bf-86f1-41af-91ab-2d7cd011db47"
