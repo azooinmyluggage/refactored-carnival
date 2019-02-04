@@ -24,7 +24,7 @@ action "Build container image" {
 
 action "Tag image" {
   uses = "actions/docker/tag@6495e70"
-  args = "actionacr.azurecr.io/actionacr actionacr.azurecr.io/actionacr"
+  args = "actionacr.azurecr.io/actionacr actionacr.azurecr.io/actionacr:$GITHUB_SHA"
   needs = ["Build container image"]
 }
 
@@ -75,6 +75,7 @@ action "Azure/github-actions/aks@master" {
     DOCKER_REGISTRY_URL = "actionacr.azurecr.io"
     DOCKER_USERNAME = "actionacr"
     CONTAINER_IMAGE_NAME = "actionacr.azurecr.io/actionacr"
+    CONTAINER_IMAGE_TAG = "$GITHUB_SHA"
   }
 }
 
