@@ -30,7 +30,7 @@ action "Tag image" {
 
 action "Push to Container Registry" {
   uses = "actions/docker/cli@6495e70"
-  args = "push aksdemoactionacr.azurecr.io/aksdemoactionacr"
+  args = "push actionacr.azurecr.io/actionacr"
   needs = ["Tag image"]
 }
 
