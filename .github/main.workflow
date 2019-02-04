@@ -73,7 +73,7 @@ action "Azure/github-actions/aks@master" {
   env = {
     AKS_CLUSTER_NAME = "actionk8s"
     DOCKER_REGISTRY_URL = "actionacr.azurecr.io"
-    CONTAINER_IMAGE_NAME = ""
     DOCKER_USERNAME = "actionacr"
+    CONTAINER_IMAGE_NAME = "actionacr.azurecr.io/actionacr"
   }
 }
