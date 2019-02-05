@@ -1,8 +1,8 @@
 workflow "GH Actions for Azure" {
   resolves = [
     "Deploy to Azure WebappContainer",
-    "Azure/github-actions/aks@master",
-    "Azure/github-actions/releasepipelines@master",
+    "Push to Container Registry",
+    "Azure Login",
   ]
   on = "push"
 }
@@ -64,28 +64,4 @@ action "Deploy to Azure WebappContainer" {
     CONTAINER_IMAGE_NAME = "actionacr"
   }
   needs = ["Create WebappContainers"]
-}
-
-action "Azure/github-actions/aks@master" {
-  uses = "Azure/github-actions/aks@master"
-  needs = ["Azure Login"]
-  secrets = ["DOCKER_PASSWORD"]
-  env = {
-    AKS_CLUSTER_NAME = "actionk8s"
-    DOCKER_REGISTRY_URL = "actionacr.azurecr.io"
-    DOCKER_USERNAME = "actionacr"
-    CONTAINER_IMAGE_NAME = "actionacr.azurecr.io/actionacr"
-  }
-  args = "--set image.pullPolicy=Always"
-}
-
-action "Azure/github-actions/releasepipelines@master" {
-  uses = "Azure/github-actions/releasepipelines@master"
-  needs = ["Push to Container Registry"]
-  env = {
-    AZURE_PIPELINE_NAME = "New release pipeline"
-    AZURE_PIPELINE_PROJECT = "actionsplkt"
-    AZURE_PIPELINE_ORGANIZATION = "pulkit-agarwal"
-  }
-  secrets = ["AZURE_PIPELINE_TOKEN"]
 }
