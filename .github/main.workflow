@@ -22,5 +22,5 @@ action "Azure AKS Deploy" {
     CONTAINER_IMAGE_NAME = "dsmsgosampleappfc73.azurecr.io/dsmsgosampleappfc73:1777"
     AKS_CLUSTER_NAME = "dsmsgosampleapp"
   }
-  args = "--set container.port=8000"
+  args = "--set container.port=80,service.port=9090"
 }
