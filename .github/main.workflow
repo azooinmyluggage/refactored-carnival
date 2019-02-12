@@ -18,9 +18,9 @@ action "Azure Login - 2" {
 action "Azure AKS Deploy" {
   uses = "Azure/github-actions/aks@users/desattir/shellcheck"
   needs = ["Azure Login - 2"]
-  secrets = ["DOCKER_PASSWORD"]
   env = {
     CONTAINER_IMAGE_NAME = "dsmsgosampleappfc73.azurecr.io/dsmsgosampleappfc73:1777"
     AKS_CLUSTER_NAME = "dsmsgosampleapp"
   }
+  args = "--set container.port=80"
 }
